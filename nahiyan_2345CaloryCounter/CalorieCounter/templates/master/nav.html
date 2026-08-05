@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+  <div class="container">
+    <!-- Brand Logo / Name -->
+    <a class="navbar-brand fw-bold fs-4 text-success" href="#">
+      <i class="bi bi-heart-pulse-fill me-2"></i>CaloryCounter
+    </a>
+    
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left Side Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link px-3 fw-medium" href="{% url 'dashboard_page' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 fw-medium" href="{% url 'consumed_calories_list' %}">Consumed Calories</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <!-- Right Side Action Buttons -->
+      <ul class="navbar-nav ms-auto align-items-center">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link px-3 me-2 fw-medium" href="{% url 'profile_page' %}">
+            <i class="bi bi-person-circle me-1"></i>Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-danger btn-sm px-3 rounded-pill" href="{% url 'logout_page' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link px-3 fw-medium" href="{% url 'login_page' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-success btn-sm px-4 rounded-pill ms-2 shadow-sm" href="{% url 'register_page' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

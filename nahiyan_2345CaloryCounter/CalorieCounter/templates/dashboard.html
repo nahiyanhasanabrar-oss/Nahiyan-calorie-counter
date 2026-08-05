@@ -1,0 +1,122 @@
+{% extends 'master/base.html' %} 
+
+{% block body %}
+<div class="container py-5">
+  
+  <!-- Alert Message Container -->
+  <div class="mb-4">
+    {% include 'master/message.html' %}
+  </div>
+
+  <!-- Header Section -->
+  <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+    <div>
+      <h1 class="fw-bold text-dark mb-1">Daily Calorie Tracker</h1>
+      <p class="text-muted mb-0">Monitor your daily nutrition and calorie intake goals.</p>
+    </div>
+  </div>
+
+  <!-- Stat Cards Section -->
+  <div class="row g-4 mb-4">
+    <!-- Consumed Calories -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+        <div class="card-body p-4 bg-light">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-uppercase tracking-wider text-muted fw-bold small">Consumed Calories</span>
+            <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 fw-semibold">Today</span>
+          </div>
+          <h2 class="display-6 fw-bold text-dark mb-0">{{consumed_calories}} <span class="fs-5 text-muted fw-normal">Kcal</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Required Calories -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+        <div class="card-body p-4 bg-light">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-uppercase tracking-wider text-muted fw-bold small">Required Calories</span>
+            <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2 fw-semibold">Target</span>
+          </div>
+          <h2 class="display-6 fw-bold text-dark mb-0">{{required_calories}} <span class="fs-5 text-muted fw-normal">Kcal</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Balance Calories -->
+    <div class="col-xl-4 col-md-12">
+      <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+        <div class="card-body p-4 bg-light">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-uppercase tracking-wider text-muted fw-bold small">Less/More Calories</span>
+            <span class="badge bg-warning-subtle text-warning rounded-pill px-3 py-2 fw-semibold">Status</span>
+          </div>
+          <h2 class="display-6 fw-bold text-dark mb-0">{{less_more}} <span class="fs-5 text-muted fw-normal">Kcal</span></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suggestion Alert Box -->
+  <div class="alert alert-danger border-0 shadow-sm rounded-4 p-4 mb-5 d-flex align-items-start" role="alert">
+    <div class="ms-2">
+      <h5 class="alert-heading fw-bold mb-1">Health Suggestion</h5>
+      <p class="mb-0 text-secondary">{{suggestion}}</p>
+    </div>
+  </div>
+
+  <!-- Data Table Section -->
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+      <div>
+        <h4 class="fw-bold text-dark mb-1">Today's Consumed Items</h4>
+        <p class="text-muted small mb-0">Total logged entries: <span class="badge bg-dark rounded-pill">{{total_count}}</span></p>
+      </div>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-uppercase fs-7 text-muted border-bottom">
+          <tr>
+            <th scope="col" class="ps-4 py-3">#SL</th>
+            <th scope="col" class="py-3">Item Name</th>
+            <th scope="col" class="py-3">Consumed Calorie</th>
+            <th scope="col" class="pe-4 py-3 text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in today_consumed_date %}
+          <tr class="border-bottom-0">
+            <td class="ps-4 fw-medium text-secondary">{{forloop.counter}}</td>
+            <td>
+              <span class="fw-bold text-dark">{{data.item_name}}</span>
+            </td>
+            <td>
+              <span class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-1.5 fw-semibold">{{data.calorie}} Kcal</span>
+            </td>
+            <td class="pe-4 text-end">
+              <div class="d-inline-flex gap-2">
+                <a href="{% url 'Update_calorie' data.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                  Edit
+                </a>
+                <a href="{% url 'delate_calorie' data.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                  Delete
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center py-5 text-muted">
+              No items consumed today yet.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock body %}

@@ -1,0 +1,79 @@
+{% extends 'master/base.html' %}
+
+{% block body %}
+<div class="container py-5">
+  
+  <!-- Alert Message Container -->
+  <div class="mb-4">
+    {% include 'master/message.html' %}
+  </div>
+
+  <!-- Header & Add Button Section -->
+  <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+    <div>
+      <h1 class="fw-bold text-dark mb-1">Calorie Log List</h1>
+      <p class="text-muted mb-0">View, manage, and track all your logged food items.</p>
+    </div>
+    <a href="{% url 'add_calorie' %}" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">
+      + Add Calorie
+    </a>
+  </div>
+
+  <!-- Data Table Container Card -->
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-uppercase fs-7 text-muted border-bottom">
+          <tr>
+            <th scope="col" class="ps-4 py-3">#SL</th>
+            <th scope="col" class="py-3">Item Name</th>
+            <th scope="col" class="py-3">Consumed Calorie</th>
+            <th scope="col" class="pe-4 py-3 text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in consumed_data %}
+          <tr class="border-bottom-0">
+            <!-- Serial Number -->
+            <td class="ps-4 fw-medium text-secondary">{{forloop.counter}}</td>
+            
+            <!-- Item Name -->
+            <td>
+              <span class="fw-bold text-dark">{{data.item_name}}</span>
+            </td>
+            
+            <!-- Calorie Count with Badge -->
+            <td>
+              <span class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-1.5 fw-semibold">
+                {{data.calorie}} Kcal
+              </span>
+            </td>
+            
+            <!-- Action Buttons -->
+            <td class="pe-4 text-end">
+              <div class="d-inline-flex gap-2">
+                <a href="{% url 'Update_calorie' data.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                  Edit
+                </a>
+                <a href="{% url 'delate_calorie' data.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                  Delete
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <!-- Empty State Profile -->
+          <tr>
+            <td colspan="4" class="text-center py-5 text-muted">
+              <p class="mb-2">No calorie records found.</p>
+              <a href="{% url 'add_calorie' %}" class="btn btn-sm btn-link fw-semibold p-0">Log your first item</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock body %}
